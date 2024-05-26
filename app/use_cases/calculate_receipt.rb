@@ -6,7 +6,7 @@ class CalculateReceipt
   
     def call
       item_counts = Hash.new(0)
-      @items.each { |item| item_counts[item] += 1 }
+      @items.each { |item| item_counts[item.downcase] += 1 }
   
       total_cost = 0
       total_savings = 0
@@ -33,9 +33,11 @@ class CalculateReceipt
             savings = 0
           end
   
-          item_details << { item: item, quantity: count, total: item_cost.round(2) }
+          item_details << { item: item.capitalize, quantity: count, total: item_cost.round(2) }
           total_cost += item_cost
           total_savings += savings
+        else
+          puts "Warning: Item '#{item}' not recognized and will be ignored."
         end
       end
   
